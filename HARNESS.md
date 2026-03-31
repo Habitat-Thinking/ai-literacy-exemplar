@@ -90,7 +90,7 @@
 
 ## Status
 
-Last audit: 2026-03-30
+Last audit: 2026-03-31
 Constraints enforced: 7/7
 Garbage collection active: 1/1
 Drift detected: no

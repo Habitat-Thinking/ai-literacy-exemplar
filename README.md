@@ -5,6 +5,7 @@
 [![Harness](https://img.shields.io/badge/Harness-7%2F7_enforced-2E8B57?style=flat-square)](HARNESS.md)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
+[![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_3-20B2AA?style=flat-square)](assessments/2026-03-31-assessment.md)
 
 A worked example of the AI Literacy framework — a Go CLI Markdown link checker built using the [ai-literacy-superpowers](https://github.com/russmiles/ai-literacy-superpowers) plugin, with the full framework-aligned development workflow in action.
 
@@ -99,7 +100,8 @@ ADVISORY LOOP (edit time — warn, do not block)
 │
 └── Commands
     ├── /reflect                        Capture post-task learnings
-    └── /worktree spin|merge|clean      Parallel agent isolation
+    ├── /worktree spin|merge|clean      Parallel agent isolation
+    └── /assess                         AI literacy assessment + remediation
 
 
 STRICT LOOP (merge time — block until green)
@@ -116,7 +118,8 @@ STRICT LOOP (merge time — block until green)
 │   ├── tdd-agent                       Failing tests from spec scenarios
 │   ├── go-implementer                  Makes Go tests green (scoped)
 │   ├── code-reviewer                   CUPID + LP review (no Write)
-│   └── integration-agent               CHANGELOG, PR, CI, merge, reflection
+│   ├── integration-agent               CHANGELOG, PR, CI, merge, reflection
+│   └── assessor                       AI literacy assessment + remediation
 │
 └── Harness Constraints (HARNESS.md)
     ├── 4 deterministic                 markdownlint, tests, coverage, govulncheck
