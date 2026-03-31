@@ -75,18 +75,70 @@ orchestrator
 
 ## The Three Enforcement Loops
 
+### Mechanism Map
+
 ```text
-ADVISORY (edit time)
-  └── PreToolUse hook warns on HARNESS.md constraint violations
+ADVISORY LOOP (edit time — warn, do not block)
+│
+├── Hooks (from ai-literacy-superpowers plugin)
+│   ├── PreToolUse constraint gate     Reads HARNESS.md commit-scoped constraints,
+│   │                                  warns on violations during Write/Edit
+│   ├── Stop drift check               Detects CI/linter/dependency changes at
+│   │                                   session end, nudges /harness-audit
+│   └── Stop reflection prompt          Detects commits during session,
+│                                        nudges /reflect to capture learnings
+├── Context (read by agents at session start)
+│   ├── CLAUDE.md                       Go conventions, LP, CUPID, spec-first, TDD
+│   ├── AGENTS.md                       Compound learning memory
+│   ├── MODEL_ROUTING.md                Model-tier guidance for 6 agents
+│   └── .claude/skills/
+│       ├── literate-programming/       Code generation conventions
+│       ├── cupid-code-review/          Code review lens
+│       ├── github-actions-supply-chain/ CI hardening checklist
+│       └── dependency-vulnerability-audit/ Go CVE procedures
+│
+└── Commands
+    ├── /reflect                        Capture post-task learnings
+    └── /worktree spin|merge|clean      Parallel agent isolation
 
-STRICT (merge time)
-  ├── markdownlint on all .md files
-  ├── Go tests + 96% coverage
-  └── govulncheck vulnerability scan
 
-INVESTIGATIVE (weekly)
-  ├── go-mutesting mutation testing
-  └── Dependabot dependency updates
+STRICT LOOP (merge time — block until green)
+│
+├── CI Workflows (.github/workflows/)
+│   ├── lint-markdown.yml               markdownlint on all .md files
+│   └── go-tests.yml                    Go tests + 96% coverage + govulncheck
+│
+├── Agent Pipeline (.claude/agents/)
+│   ├── orchestrator                    Coordinates pipeline
+│   │   ├── GATE: plan approval         User reviews spec before implementation
+│   │   └── GUARDRAIL: MAX_REVIEW_CYCLES=3
+│   ├── spec-writer                     Spec + plan updates (no Bash)
+│   ├── tdd-agent                       Failing tests from spec scenarios
+│   ├── go-implementer                  Makes Go tests green (scoped)
+│   ├── code-reviewer                   CUPID + LP review (no Write)
+│   └── integration-agent               CHANGELOG, PR, CI, merge, reflection
+│
+└── Harness Constraints (HARNESS.md)
+    ├── 4 deterministic                 markdownlint, tests, coverage, govulncheck
+    ├── 2 agent-backed                  Literate programming, CUPID
+    └── 1 weekly deterministic          Mutation testing
+
+
+INVESTIGATIVE LOOP (scheduled — sweep for entropy)
+│
+├── Mutation Testing (mutation-testing.yml, weekly)
+│   └── Go — go-mutesting (parser + checker)
+│
+├── Dependabot (.github/dependabot.yml)
+│   ├── github-actions                  Weekly action updates
+│   └── gomod                           Weekly Go dependency updates
+│
+├── Garbage Collection Rules (HARNESS.md)
+│   └── Documentation freshness         Agent — stale references
+│
+└── Compound Learning
+    ├── REFLECTION_LOG.md               Agent reflections (append-only)
+    └── AGENTS.md                       Human-curated from reflections
 ```
 
 ---
