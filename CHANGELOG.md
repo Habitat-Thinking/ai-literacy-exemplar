@@ -2,6 +2,23 @@
 
 ---
 
+## 31 March 2026
+
+### AI Literacy Assessment
+
+- **First AI literacy assessment: Level 3 — Habitat Engineer** — full
+  evidence-based assessment documenting L2-L5 signals, three-discipline
+  scoring (context 4/5, constraints 5/5, guardrails 3/5), strengths,
+  gaps, and recommendations. Guardrail design ceiling identified:
+  configured but not yet operational.
+- **Assessment badge and mechanism map updated** — AI Literacy Level 3
+  badge added to README, assessor agent and /assess command added to
+  mechanism map.
+- **First reflection captured** — REFLECTION_LOG.md populated with
+  assessment reflection, activating the compound learning system.
+
+---
+
 ## 30 March 2026
 
 ### Initial habitat and application
