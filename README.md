@@ -25,7 +25,7 @@ Given a file or directory, it extracts all links (inline, reference, autolinks),
 
 That's it. The application is deliberately simple — three source files, two test files, readable in ten minutes. The point is not the application. The point is how it was built.
 
-#### Source structure
+### Source structure
 
 ```text
 cmd/mdcheck/main.go      Entry point — CLI parsing, file discovery, output formatting
@@ -35,7 +35,7 @@ internal/parser_test.go   Parser unit tests (all link types and edge cases)
 internal/checker_test.go  Checker unit tests (mocked HTTP, temp filesystem, fragment resolution)
 ```
 
-#### Example output
+### Example output
 
 ```text
 $ ./mdcheck docs/
