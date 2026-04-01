@@ -169,7 +169,7 @@ This repository demonstrates Level 3 harness observability — file-based health
 The harness is observable through four layers:
 
 | Layer | Question | How |
-|-------|----------|-----|
+| ----- | -------- | --- |
 | Operational cadence | Is the harness running? | `/harness-health` generates snapshots; a Stop hook nudges when the last snapshot is older than 30 days |
 | Trend visibility | How has the harness changed? | Snapshots are diffed to show deltas; `--trends` produces multi-period views |
 | Telemetry export | Can I visualise this externally? | Snapshot data can be exported as OpenTelemetry metrics (optional — not configured in this repo) |
