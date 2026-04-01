@@ -25,6 +25,29 @@ Given a file or directory, it extracts all links (inline, reference, autolinks),
 
 That's it. The application is deliberately simple — three source files, two test files, readable in ten minutes. The point is not the application. The point is how it was built.
 
+### Source structure
+
+```text
+cmd/mdcheck/main.go      Entry point — CLI parsing, file discovery, output formatting
+internal/parser.go        Link extraction — inline, reference, autolink, and fragment links
+internal/checker.go       Link validation — HTTP HEAD for URLs, file existence for paths, fragment heading checks
+internal/parser_test.go   Parser unit tests (all link types and edge cases)
+internal/checker_test.go  Checker unit tests (mocked HTTP, temp filesystem, fragment resolution)
+```
+
+### Example output
+
+```text
+$ ./mdcheck docs/
+docs/guide.md:15 — broken link: [API reference](api.md) — file not found: api.md
+docs/guide.md:42 — broken link: [Setup](README.md#installation) — fragment #installation not found in README.md
+docs/changelog.md:8 — broken link: [v2.0 release](https://example.com/releases/v2) — HTTP 404
+
+3 broken links found in 12 files (47 links checked)
+```
+
+Exit codes: `0` = all links valid, `1` = broken links found, `2` = usage error.
+
 ---
 
 ## The Framework in Action
@@ -57,6 +80,17 @@ The link checker was specified before it was built:
 
 - **[spec.md](specs/001-link-checker/spec.md)** — user stories, acceptance scenarios, functional requirements
 - **[plan.md](specs/001-link-checker/plan.md)** — Go implementation plan with module structure, data model, algorithms
+
+#### Assessment and remediation
+
+This repository has been assessed twice:
+
+- **2026-03-31**: Level 3 (Habitat Engineer) — all infrastructure configured but not yet operational. Three gaps identified: no operating cadence, compound learning not exercised, pipeline used only once.
+- **2026-04-01**: Level 4 (Specification Architect) — gaps addressed: operating cadence added to CLAUDE.md, first reflection promoted to AGENTS.md (compound learning demonstrated), pipeline exercised on a second feature (fragment validation).
+
+To run your own assessment: `/assess`
+
+The assessor scans the repo for evidence, scores three disciplines (context engineering, architectural constraints, guardrail design), and produces a timestamped report with specific recommendations. The weakest discipline determines the ceiling.
 
 ### Level 5: The Agent Team
 
@@ -150,6 +184,21 @@ INVESTIGATIVE LOOP (scheduled — sweep for entropy)
     └── AGENTS.md                       Human-curated from reflections
 ```
 
+#### Compound learning
+
+The repo demonstrates the three-stage learning cycle:
+
+1. **Capture** — agents append structured reflections to `REFLECTION_LOG.md` after each task
+2. **Curate** — humans review reflections and promote worthy entries to `AGENTS.md`
+3. **Benefit** — all agents read `AGENTS.md` at session start
+
+**Current state:**
+
+- `REFLECTION_LOG.md` — 3 entries (assessment reflection ×2, fragment validation reflection)
+- `AGENTS.md` — 1 GOTCHA promoted: "configured-vs-operational" (a fully configured habitat does not guarantee operational maturity)
+
+This GOTCHA now informs all future agent sessions — they know the difference between infrastructure that exists and practices that are followed.
+
 ---
 
 ## Verification Approach
@@ -161,6 +210,10 @@ Three layers form the verification chain:
 3. **Mutation testing verifies the tests** — weekly go-mutesting confirms tests detect faults
 
 Coverage measures what was executed. Mutation testing measures whether the tests actually detect changes.
+
+**Harness constraint counts:** HARNESS.md contains **7 constraints** (in the Constraints section) and **5 garbage collection rules** (in the GC section). All 7 constraints and all 5 GC rules are enforced. The badge `7/7 enforced` refers to the 7 constraints; GC rules are tracked separately in the Status block at the bottom of HARNESS.md.
+
+**Dependabot** is configured (`.github/dependabot.yml`) for weekly Go module and GitHub Actions updates, contributing to dependency currency monitoring in the investigative loop.
 
 ## Harness Observability
 
@@ -217,6 +270,34 @@ Suggested reading order:
 6. **[internal/parser.go](internal/parser.go)** — literate programming in practice
 7. **[internal/checker.go](internal/checker.go)** — CUPID properties in practice
 8. **[.claude/agents/](/.claude/agents/)** — the agent team
+
+### Try It Yourself
+
+The best way to understand the framework is to exercise the pipeline on a real change.
+
+#### Exercise: Add a new link type
+
+mdcheck currently validates inline links, reference links, autolinks, and fragment links. Try adding support for image links (`![alt](url)`).
+
+**Using the agent pipeline:**
+
+```text
+Use the orchestrator agent: "Add image link extraction and validation to mdcheck"
+```
+
+The orchestrator will create an issue, update the spec, write failing tests, implement, review, and merge — demonstrating the full Level 4 workflow.
+
+**Manually (step by step):**
+
+1. Update `specs/001-link-checker/spec.md` — add acceptance scenarios for image links
+2. Update `specs/001-link-checker/plan.md` — add FR mapping and test cases
+3. Write failing tests in `internal/parser_test.go`
+4. Run `go test ./internal/ -v` — confirm they fail
+5. Implement in `internal/parser.go`
+6. Run `go test ./... -v` — confirm all tests pass
+7. Check coverage: `go test ./internal/ -coverprofile=coverage.out && go tool cover -func=coverage.out`
+8. Run `/harness-health` to capture a snapshot
+9. Run `/reflect` to capture what you learned
 
 ---
 
