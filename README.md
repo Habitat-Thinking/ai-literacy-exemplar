@@ -81,6 +81,17 @@ The link checker was specified before it was built:
 - **[spec.md](specs/001-link-checker/spec.md)** — user stories, acceptance scenarios, functional requirements
 - **[plan.md](specs/001-link-checker/plan.md)** — Go implementation plan with module structure, data model, algorithms
 
+#### Assessment and remediation
+
+This repository has been assessed twice:
+
+- **2026-03-31**: Level 3 (Habitat Engineer) — all infrastructure configured but not yet operational. Three gaps identified: no operating cadence, compound learning not exercised, pipeline used only once.
+- **2026-04-01**: Level 4 (Specification Architect) — gaps addressed: operating cadence added to CLAUDE.md, first reflection promoted to AGENTS.md (compound learning demonstrated), pipeline exercised on a second feature (fragment validation).
+
+To run your own assessment: `/assess`
+
+The assessor scans the repo for evidence, scores three disciplines (context engineering, architectural constraints, guardrail design), and produces a timestamped report with specific recommendations. The weakest discipline determines the ceiling.
+
 ### Level 5: The Agent Team
 
 Seven agents coordinate the development lifecycle:
