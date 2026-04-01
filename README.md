@@ -25,6 +25,29 @@ Given a file or directory, it extracts all links (inline, reference, autolinks),
 
 That's it. The application is deliberately simple — three source files, two test files, readable in ten minutes. The point is not the application. The point is how it was built.
 
+#### Source structure
+
+```text
+cmd/mdcheck/main.go      Entry point — CLI parsing, file discovery, output formatting
+internal/parser.go        Link extraction — inline, reference, autolink, and fragment links
+internal/checker.go       Link validation — HTTP HEAD for URLs, file existence for paths, fragment heading checks
+internal/parser_test.go   Parser unit tests (all link types and edge cases)
+internal/checker_test.go  Checker unit tests (mocked HTTP, temp filesystem, fragment resolution)
+```
+
+#### Example output
+
+```text
+$ ./mdcheck docs/
+docs/guide.md:15 — broken link: [API reference](api.md) — file not found: api.md
+docs/guide.md:42 — broken link: [Setup](README.md#installation) — fragment #installation not found in README.md
+docs/changelog.md:8 — broken link: [v2.0 release](https://example.com/releases/v2) — HTTP 404
+
+3 broken links found in 12 files (47 links checked)
+```
+
+Exit codes: `0` = all links valid, `1` = broken links found, `2` = usage error.
+
 ---
 
 ## The Framework in Action
