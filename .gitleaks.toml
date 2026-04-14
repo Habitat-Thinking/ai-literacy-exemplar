@@ -1,0 +1,10 @@
+# Gitleaks configuration for mdcheck.
+# Uses the default ruleset (API keys, tokens, private keys, etc.)
+# with no custom allowlists. Override here if false positives appear.
+
+title = "mdcheck gitleaks config"
+
+[allowlist]
+  paths = [
+    '''go\.sum''',
+  ]

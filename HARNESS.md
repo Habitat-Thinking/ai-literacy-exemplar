@@ -109,14 +109,14 @@
 
 - **Rule**: A pre-commit hook prevents committing files matching
   known secret patterns (API keys, tokens, private keys, .env files)
-- **Enforcement**: unverified
-- **Tool**: gitleaks pre-commit hook (to be configured)
+- **Enforcement**: deterministic
+- **Tool**: gitleaks pre-commit hook (.pre-commit-config.yaml)
 - **Scope**: commit
 - **Governance requirement**: No secrets committed to source control
 - **Operational meaning**: A gitleaks pre-commit hook blocks commits
   containing secret patterns before they enter git history
-- **Verification method**: deterministic locally; unverified from CI
-  (cannot confirm hook is installed on every machine)
+- **Verification method**: deterministic locally; hook config exists
+  in repo (.pre-commit-config.yaml, .gitleaks.toml)
 - **Evidence**: pre-commit hook configuration exists in the repository
 - **Failure action**: commit blocked locally by the hook
 - **Frame check**: confirmed aligned — engineering (hook blocks
@@ -127,8 +127,8 @@
 ### No secrets in source — detection
 
 - **Rule**: A CI gitleaks scan finds zero secret patterns in every PR
-- **Enforcement**: unverified
-- **Tool**: gitleaks CI step (to be added to go-tests.yml)
+- **Enforcement**: deterministic
+- **Tool**: gitleaks-action in go-tests.yml
 - **Scope**: pr
 - **Governance requirement**: No secrets committed to source control
 - **Operational meaning**: gitleaks scans the PR diff for secret
@@ -252,7 +252,7 @@
 ## Status
 
 Last audit: 2026-04-14
-Constraints enforced: 7/8 (technical) + 2/5 (governance)
-Governance constraints: 5 (1 deterministic, 1 agent, 3 unverified)
+Constraints enforced: 7/8 (technical) + 4/5 (governance)
+Governance constraints: 5 (3 deterministic, 1 agent, 1 unverified)
 Garbage collection active: 5/5
 Drift detected: no

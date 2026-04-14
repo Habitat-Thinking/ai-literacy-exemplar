@@ -4,8 +4,8 @@
 [![Go Tests](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/go-tests.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/go-tests.yml)
 [![Lint Markdown](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml)
 [![Go 1.26.2](https://img.shields.io/badge/Go-1.26.2-00ADD8?logo=go&logoColor=white)](https://go.dev/)
-[![Harness](https://img.shields.io/badge/Harness-9%2F13_enforced-4682B4?style=flat-square)](HARNESS.md)
-[![Harness Health](https://img.shields.io/badge/Harness_Health-Attention-DAA520?style=flat-square)](observability/snapshots/2026-04-14b-snapshot.md)
+[![Harness](https://img.shields.io/badge/Harness-11%2F13_enforced-4682B4?style=flat-square)](HARNESS.md)
+[![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
 [![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_4_Specification_Architect-2E8B57?style=flat-square)](assessments/2026-04-14-assessment.md)
@@ -71,7 +71,7 @@ CI workflows enforce quality on every push:
 The development environment is fully configured:
 
 - **CLAUDE.md** — literate programming, CUPID review, spec-first workflow, TDD
-- **HARNESS.md** — 13 constraints (8 technical + 5 governance; 9 enforced, 4 unverified)
+- **HARNESS.md** — 13 constraints (8 technical + 5 governance; 11 enforced, 2 unverified)
 - **AGENTS.md** — compound learning memory with architectural decisions
 - **MODEL_ROUTING.md** — model-tier guidance for the seven-agent team
 - **Five project-local skills** — literate programming, CUPID, supply chain, dependency audit, AI literacy assessment
@@ -167,9 +167,9 @@ STRICT LOOP (merge time — block until green)
     │   ├── 1 weekly deterministic      Mutation testing
     │   └── 1 unverified                SBOM generation (activates with first dependency)
     └── Governance (5)
-        ├── 1 deterministic             Human review before merge
+        ├── 3 deterministic             Human review, secrets prevention, secrets detection
         ├── 1 agent-backed              AI change traceability
-        └── 3 unverified                Secrets prevention, secrets detection, license allowlist
+        └── 1 unverified                License allowlist (activates with first dependency)
 
 
 INVESTIGATIVE LOOP (scheduled — sweep for entropy)
@@ -242,8 +242,8 @@ HARNESS.md contains **13 constraints** (8 technical + 5 governance) and **5 garb
 | Constraint | Enforcement | What it verifies |
 | --- | --- | --- |
 | Human review before merge | deterministic | Every PR has an approving human review; agent checks before attempting merge |
-| No secrets — prevention | unverified | Pre-commit hook blocks commits containing secret patterns (gitleaks, to be configured) |
-| No secrets — detection | unverified | CI scan catches secrets missed by hooks (gitleaks CI step, to be added) |
+| No secrets — prevention | deterministic | Pre-commit hook blocks commits containing secret patterns (gitleaks) |
+| No secrets — detection | deterministic | CI gitleaks scan catches secrets missed by hooks on every PR |
 | Approved dependency licenses | unverified | All external dependencies use permissive OSI-approved licenses — MIT, Apache-2.0, BSD-2/3-Clause only; copyleft prohibited (activates with first external dependency) |
 | AI change traceability | agent | Every AI-assisted PR has identifiable commits, an attribution section in the PR description, and a linked session record (design spec, plan, or reflection) |
 
@@ -290,7 +290,7 @@ The three enforcement loops generate signals that make the collaboration observa
 | **Cost** | Spend trend, model-tier distribution | Claude Code analytics dashboard |
 | **Quality** | Coverage trend (96%), mutation score trend | CI artifacts from go-tests.yml and mutation-testing.yml |
 | **Adoption** | Sessions per developer, acceptance rate | Provider analytics |
-| **Habitat health** | Harness 9/13 enforced, REFLECTION_LOG.md growth | /harness-status, git log |
+| **Habitat health** | Harness 11/13 enforced, REFLECTION_LOG.md growth | /harness-status, git log |
 
 The METR study found developers perceive a 20% AI speedup but measure a 19% slowdown. Observability closes this gap — measure first, believe second.
 
