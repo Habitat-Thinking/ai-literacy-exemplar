@@ -2,6 +2,20 @@
 
 ---
 
+## 29 April 2026
+
+### Documentation — sync from upstream framework
+
+- **Added Peter Naur to Intellectual Foundations** — synced from
+  `russmiles/ai-literacy-for-software-engineers` PR #306, which
+  promoted Naur (1985) to a sixth, independent strand of the framework's
+  Appendix K genealogy alongside Knuth, Gabriel, Beck, Terhorst-North,
+  and the neuroscience foundation. README now lists Naur directly after
+  Knuth, with the line "programming as theory building; the substance
+  that habitability protects".
+
+---
+
 ## 31 March 2026 (Q2 update)
 
 ### Documentation

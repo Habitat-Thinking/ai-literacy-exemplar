@@ -364,6 +364,7 @@ This exemplar draws on:
 
 - **Christopher Alexander** — the quality without a name; design for inhabitants
 - **Donald Knuth** — literate programming; code as literature for readers
+- **Peter Naur** — programming as theory building; the substance that habitability protects
 - **Richard P. Gabriel** — habitability; code as a place to live in
 - **Daniel Terhorst-North** — CUPID; code as a place of joy
 - **Birgitta Boeckeler** — harness engineering; the three enforcement loops
