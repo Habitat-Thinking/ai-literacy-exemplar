@@ -363,12 +363,14 @@ The init command discovers your stack, asks about your conventions, and scaffold
 This exemplar draws on:
 
 - **Christopher Alexander** — the quality without a name; design for inhabitants
+- **Michael Polanyi** — *we can know more than we can tell*; tacit knowing as the ground of all knowledge
 - **Donald Knuth** — literate programming; code as literature for readers
-- **Peter Naur** — programming as theory building; the substance that habitability protects
+- **Peter Naur** — programming as theory building; Polanyi's tacit knowing applied to software
 - **Richard P. Gabriel** — habitability; code as a place to live in
 - **Daniel Terhorst-North** — CUPID; code as a place of joy
 - **Birgitta Boeckeler** — harness engineering; the three enforcement loops
 - **Addy Osmani** — agent orchestration; quality gates and compound learning
+- **Frank Ginac** — *Cognitive Atrophy and Systemic Collapse in AI-Dependent Software Engineering* (2026); the cognitive gym, the polluted well, and the case for human variance as a non-renewable strategic resource
 
 The mission: building habitats where human and AI intelligence thrive together.
 
